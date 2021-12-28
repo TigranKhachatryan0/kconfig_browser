@@ -3,32 +3,56 @@
 import configparser
 import os, sys
 try:
-	from PyQt5 import QtCore, QtGui, QtWidgets, QtTest
+    from PyQt5 import QtCore, QtGui, QtWidgets, QtTest
 except ImportError:
-	print("error: You need to install the PyQt5 Python library first.", file=sys.stderr)
-	sys.exit(1)
+    print("error: You need to install the PyQt5 Python library first.", file=sys.stderr)
+    sys.exit(1)
 
 class KDEConfig:
+    def __init__(self):
+        self.exception_handler = None # This is a function which will get called every time
+                                      # configparser raises an exception
+        self.WRITE_ERROR      = "Could not write to the key"
+        self.READ_ERROR       = "Could not read the key value"
+        self.GET_KEYS_ERROR   = "Could not get keys from the selected group"
+        self.GET_CONFIGS_ERROR= "Could not get a list of config files"
+        self.GET_GROUPS_ERROR = "Could not get a list of groups in the config file"
     def read_config(self, file: str, group: str, key: str):
         config = configparser.ConfigParser(strict=False)
-        config.read(file)
-        return config[group][key]
+        try:
+            config.read(file)
+            return config[group][key]
+        except Exception as e:
+            if self.exception_handler:                      # If an exception handler function is assigned,
+                self.exception_handler(e, self.READ_ERROR)  # Call the exception handler function
     def write_config(self, file: str, group: str, key: str, value: str):
         config = configparser.ConfigParser(strict=False)
-        config.read(file)
-        config[group][key] = value
-        with open(file, 'w') as configfile:
-            config.write(configfile)
+        try:
+            config.read(file)
+            config[group][key] = value
+            with open(file, 'w') as configfile:
+                config.write(configfile)
+        except Exception as e:
+            if self.exception_handler:
+                self.exception_handler(e, self.WRITE_ERROR)
     def get_keys(self, file: str, group: str):
         config = configparser.ConfigParser(strict=False)
-        config.read(file)
-        return dict(config[group])
+        try:
+            config.read(file)
+            return dict(config[group])
+        except Exception as e:
+            if self.exception_handler:
+                self.exception_handler(e, self.GET_KEYS_ERROR)
     def get_list_of_config_files(self, dir: str = f"{os.path.expanduser('~')}/.config"):
         return [f for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f)) and f.startswith("k") and f.endswith("rc")]
     def get_groups_list(self, file: str):
         config = configparser.ConfigParser(strict=False)
-        config.read(file)
-        return config.sections()
+        try:
+            config.read(file)
+            return config.sections()
+        except Exception as e:
+            if self.exception_handler:
+                self.exception_handler(e, self.GET_GROUPS_ERROR)
 
 kde_config = KDEConfig()
 
@@ -54,9 +78,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__()
         self.resize_event_handler = None  # This is a function that will be called when the window is resized.
         self.setWindowTitle("KConfig Browser")
-        self.setWindowIcon(QtGui.QIcon("/usr/share/icons/oxygen/base/22x22/actions/settings-configure.png")) # FIXME: We literally have an easy way to find
-                                                                                                             # KDE configurations, so why hardcode the icon path?
-                                                                                                             # I find this icon beautiful, though...
+        self.setWindowIcon(QtGui.QIcon.fromTheme("settings-configure")) # Set the window icon to the "settings-configure" from the current theme
         self.config_files = self._generate_config_dictionary()
 
         self.config_files_combo = QtWidgets.QComboBox(self) # Create the combo box that will hold the list of config files
@@ -105,6 +127,9 @@ class MainWindow(QtWidgets.QMainWindow):
         # Load the first config file
         filename = self.config_files[self.config_files_combo.currentText()]
         self._load_config_file(filename)
+
+        # Set the exception handler for the KDEConfig class
+        kde_config.exception_handler = lambda exception, context: self.create_error_message(context, "Exception occurred in KDEConfig class", f"The exception is: {repr(exception)}\n\nSorry for the inconvinience. Please report this bug.")
 
         self.show()
     def key_changed_by_user(self):
@@ -167,6 +192,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         filename = self.config_files[self.config_files_combo.currentText()] # Get the filename of the next config file
         items = kde_config.get_groups_list(filename)                        # Get the group list from the new config file
+        if not items:
+            # Error message (create_error_message) was closed by the user, ignore this
+            return
         self.groups_listbox.addItems(items)                                 # Add the groups to the list box
     def config_file_changed_by_user(self):
         filename = self.config_files[self.config_files_combo.currentText()]
@@ -182,6 +210,15 @@ class MainWindow(QtWidgets.QMainWindow):
         items = kde_config.get_keys(filename,
                                     group)                                  # Get the key list from the current group
         self.keys_listbox.addItems(items.keys())                            # Add the keys to the list box
+    def create_error_message(self, message, title, details):
+        msg = QtWidgets.QMessageBox()                      # Create the message box
+        msg.setIcon(QtWidgets.QMessageBox.Critical)        # Set the icon to "Critical" (This is an error)
+        msg.setText(message)                               # Set the text of the message box
+        msg.setDetailedText(details)                       # Set the detailed text of the message box. This will be shown when the user clicks on the "Show Details" button
+        msg.setWindowTitle(title)                          # Set the title of the message box
+        msg.setStandardButtons(QtWidgets.QMessageBox.Ok)   # Set the button that will be shown in the message box
+        msg.setDefaultButton(QtWidgets.QMessageBox.Ok)     # Set the default button to the "Ok" button
+        msg.exec_()                                        # Wait until the user closes the message box
     def _resize_window_widgets(self):
         PADDING_RIGHT = 10
         PADDING_LEFT = 10
