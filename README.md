@@ -8,7 +8,7 @@ KConfig Browser is a graphical application which allows you to modify KDE config
 ## Why
 I created this little tool in order to learn Qt (in Python for now, because at the moment I don't know C++)
 
-I kinda envied that GNOME people had the graphical dconf-editor for GConfig and KDE didn't have any graphical tools for manually editing KConfig (at least none that I've heard of)
+I kinda envied that GNOME people had the graphical dconf-editor for GSettings and KDE didn't have any graphical tools for manually editing KConfig (at least none that I've heard of)
 
 Even though it was written in a short time, it serves it's purpose of a graphical KConfig reader/editor.
 
