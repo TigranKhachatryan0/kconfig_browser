@@ -1,1 +1,1 @@
-PySide6
+PyQt5
