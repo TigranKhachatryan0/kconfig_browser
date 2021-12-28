@@ -4,6 +4,8 @@ KConfig Browser is a graphical application which allows you to modify KDE config
 ## Screenshot
 ![Screenshot of KConfigBrowser with a selected configuration file, group and key][1]
 
+## Credits
+Huge thanks to GitHub user Zren for the custom KConfig ConfigParser class
 
 ## Why
 I created this little tool in order to learn Qt (in Python for now, because at the moment I don't know C++)
