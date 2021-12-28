@@ -144,7 +144,7 @@ class KConfMainWindow(Qw.QMainWindow, Ui_MainWindow_kconf):
         self.listWidget_keys.addItems(items.keys())  # Add the keys to the list box
 
 
-    def _generate_config_dictionary(self) -> dict[str, str]:
+    def _generate_config_dictionary(self): # -> dict[str, str]: (type object is not subscriptable)
         config_files = self.kde_config.get_list_of_config_files()
         config_files_paths = [f"{os.path.expanduser('~')}/.config/{c}" for c in config_files]
         config_files_dict = {}
