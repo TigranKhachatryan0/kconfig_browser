@@ -1,0 +1,16 @@
+PyCharm external tools can be set up using this:
+
+The /.../ needs to be expanded to an absolute path.
+/.../venv/bin/pyside6-uic
+$FileName$ -o ../src/ui_generated_files/ui_$FileNameWithoutExtension$.py
+$FileDir$
+
+/.../venv/bin/pyside6-rcc
+$FileName$ -o ../src/$FileNameWithoutExtension$_rc.py
+$FileDir$
+
+Alternatively, set up custom scripts or macros.
+
+python -m nuitka --help
+# Linux AppImage:
+python -m nuitka --onefile --plugin-enable=pyside6 -o "kconfig browser.appimage" --linux-onefile-icon=icons/<icon file here> --output-dir=nuitka_build src/kdeconf.py
