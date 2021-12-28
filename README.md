@@ -17,7 +17,7 @@ Even though it was written in a short time, it serves its purpose of a graphical
 
 
 ## How to install
-You don't need to install it anywhere, just make sure you have the PySide6 library installed, 
+You don't need to install it anywhere, just make sure you have the PyQt5 library installed, 
 and then you may run the `kdeconf.py` Python file.
 
 
