@@ -1,6 +1,9 @@
 # kconfig_browser
 KConfig Browser is a graphical application which allows you to modify KDE configuration files found in ~/.config
 
+## Warning
+Qt6 is used in the main branch. The Breeze application style does not support Qt6, so you may want to use the `pyqt5` branch
+
 ## Screenshot
 ![Screenshot of KConfigBrowser with a selected configuration file, group and key][1]
 
