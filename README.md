@@ -20,8 +20,11 @@ Even though it was written in a short time, it serves its purpose of a graphical
 
 
 ## How to install
-You don't need to install it anywhere, just make sure you have the PySide6 library installed, 
-and then you may run the `kdeconf.py` Python file.
+If you wish to quickly run it, then run the Python file as a package from the main directory:
+```
+$ python3 -m kconfig_browser.src.kdeconf
+```
+Also, see `notes.txt`
 
 
 ## How to use
