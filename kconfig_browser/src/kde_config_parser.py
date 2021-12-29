@@ -16,8 +16,8 @@ The original class can be found here: https://github.com/Zren/breeze-alphablack/
 
 
 class KdeConfigParser(configparser.ConfigParser):
-    def __init__(self, filename, strict: bool = True):
-        super().__init__(strict=strict)
+    def __init__(self, filename, strict: bool = True, interpolation = None):
+        super().__init__(strict=strict, interpolation=interpolation)
 
         # Keep case sensitive keys
         # http://stackoverflow.com/questions/19359556/configparser-reads-capital-keys-and-make-them-lower-case
