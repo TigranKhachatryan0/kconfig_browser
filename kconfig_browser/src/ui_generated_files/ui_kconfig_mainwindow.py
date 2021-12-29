@@ -3,14 +3,14 @@
 ################################################################################
 ## Form generated from reading UI file 'kconfig_mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.2
+## Created by: Qt User Interface Compiler version 5.15.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *  # type: ignore
-from PySide6.QtGui import *  # type: ignore
-from PySide6.QtWidgets import *  # type: ignore
+from PySide6.QtCore import *
+from PySide6.QtGui import *
+from PySide6.QtWidgets import *
 
 
 class Ui_MainWindow_kconf(object):
@@ -47,14 +47,46 @@ class Ui_MainWindow_kconf(object):
 
         self.listWidget_groups = QListWidget(self.verticalLayoutWidget)
         self.listWidget_groups.setObjectName(u"listWidget_groups")
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.listWidget_groups.sizePolicy().hasHeightForWidth())
+        self.listWidget_groups.setSizePolicy(sizePolicy)
 
         self.left_panel.addWidget(self.listWidget_groups)
 
+        self.splitter.addWidget(self.verticalLayoutWidget)
+        self.verticalLayoutWidget_2 = QWidget(self.splitter)
+        self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
+        self.right_panel = QVBoxLayout(self.verticalLayoutWidget_2)
+        self.right_panel.setObjectName(u"right_panel")
+        self.right_panel.setContentsMargins(0, 0, 0, 0)
+        self.listWidget_keys = QListWidget(self.verticalLayoutWidget_2)
+        self.listWidget_keys.setObjectName(u"listWidget_keys")
+
+        self.right_panel.addWidget(self.listWidget_keys)
+
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.pushButton_reload = QPushButton(self.verticalLayoutWidget)
+        self.lineEdit_value = QLineEdit(self.verticalLayoutWidget_2)
+        self.lineEdit_value.setObjectName(u"lineEdit_value")
+        self.lineEdit_value.setEnabled(False)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.lineEdit_value.sizePolicy().hasHeightForWidth())
+        self.lineEdit_value.setSizePolicy(sizePolicy1)
+
+        self.horizontalLayout.addWidget(self.lineEdit_value)
+
+        self.pushButton_reload = QPushButton(self.verticalLayoutWidget_2)
         self.pushButton_reload.setObjectName(u"pushButton_reload")
         self.pushButton_reload.setEnabled(False)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.pushButton_reload.sizePolicy().hasHeightForWidth())
+        self.pushButton_reload.setSizePolicy(sizePolicy2)
         icon1 = QIcon()
         iconThemeName = u"view-refresh"
         if QIcon.hasThemeIcon(iconThemeName):
@@ -66,7 +98,7 @@ class Ui_MainWindow_kconf(object):
 
         self.horizontalLayout.addWidget(self.pushButton_reload)
 
-        self.pushButton_save = QPushButton(self.verticalLayoutWidget)
+        self.pushButton_save = QPushButton(self.verticalLayoutWidget_2)
         self.pushButton_save.setObjectName(u"pushButton_save")
         self.pushButton_save.setEnabled(False)
         icon2 = QIcon()
@@ -81,24 +113,7 @@ class Ui_MainWindow_kconf(object):
         self.horizontalLayout.addWidget(self.pushButton_save)
 
 
-        self.left_panel.addLayout(self.horizontalLayout)
-
-        self.splitter.addWidget(self.verticalLayoutWidget)
-        self.verticalLayoutWidget_2 = QWidget(self.splitter)
-        self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.right_panel = QVBoxLayout(self.verticalLayoutWidget_2)
-        self.right_panel.setObjectName(u"right_panel")
-        self.right_panel.setContentsMargins(0, 0, 0, 0)
-        self.listWidget_keys = QListWidget(self.verticalLayoutWidget_2)
-        self.listWidget_keys.setObjectName(u"listWidget_keys")
-
-        self.right_panel.addWidget(self.listWidget_keys)
-
-        self.lineEdit_value = QLineEdit(self.verticalLayoutWidget_2)
-        self.lineEdit_value.setObjectName(u"lineEdit_value")
-        self.lineEdit_value.setEnabled(False)
-
-        self.right_panel.addWidget(self.lineEdit_value)
+        self.right_panel.addLayout(self.horizontalLayout)
 
         self.splitter.addWidget(self.verticalLayoutWidget_2)
 
@@ -116,8 +131,8 @@ class Ui_MainWindow_kconf(object):
 
     def retranslateUi(self, MainWindow_kconf):
         MainWindow_kconf.setWindowTitle(QCoreApplication.translate("MainWindow_kconf", u"KConfig Browser", None))
+        self.lineEdit_value.setPlaceholderText(QCoreApplication.translate("MainWindow_kconf", u"Key value...", None))
         self.pushButton_reload.setText(QCoreApplication.translate("MainWindow_kconf", u"Reload", None))
         self.pushButton_save.setText(QCoreApplication.translate("MainWindow_kconf", u"Save", None))
-        self.lineEdit_value.setPlaceholderText(QCoreApplication.translate("MainWindow_kconf", u"Key value...", None))
     # retranslateUi
 
